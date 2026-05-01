@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { Check, ChevronDown, Search } from 'lucide-react';
+import { API_URL } from '../utils/api';
 
 const servicesOptions = [
   'A/C System Maintenance', 'A/C System Repair', 'Heating System Installation',
@@ -41,7 +42,7 @@ const Booking: React.FC = () => {
     };
 
     try {
-      await fetch('http://localhost:3001/api/bookings', {
+      await fetch(`${API_URL}/bookings`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

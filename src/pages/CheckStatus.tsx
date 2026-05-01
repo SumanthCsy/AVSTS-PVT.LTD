@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Clock, CheckCircle, Package } from 'lucide-react';
 import gsap from 'gsap';
+import { API_URL } from '../utils/api';
 
 const CheckStatus: React.FC = () => {
   const [bookingId, setBookingId] = useState('');
@@ -14,7 +15,7 @@ const CheckStatus: React.FC = () => {
     setData(null);
 
     try {
-      const res = await fetch(`http://localhost:3001/api/bookings/${bookingId}`);
+      const res = await fetch(`${API_URL}/bookings/${bookingId}`);
       if (!res.ok) throw new Error('Booking not found');
       const json = await res.json();
       setData(json);

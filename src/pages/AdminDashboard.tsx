@@ -3,7 +3,9 @@ import { Bell, Image as ImageIcon, LogOut, FileText, Settings as SettingsIcon, B
 import { useNavigate } from 'react-router-dom';
 import RichEditor from '../components/RichEditor';
 
-const API_BASE = 'http://localhost:3001/api';
+import { API_URL, UPLOADS_URL } from '../utils/api';
+
+const API_BASE = API_URL;
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('analytics');
@@ -433,7 +435,7 @@ const AdminDashboard: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {posts.map(post => (
                 <div key={post.id} className="info-card" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                  {post.image && <img src={`http://localhost:3001${post.image}`} alt="post" style={{ width: '150px', height: '100px', objectFit: 'cover', borderRadius: '8px' }} />}
+                  {post.image && <img src={`${UPLOADS_URL}${post.image}`} alt="post" style={{ width: '150px', height: '100px', objectFit: 'cover', borderRadius: '8px' }} />}
                   <div style={{ flexGrow: 1 }}>
                     <h4 style={{ color: 'var(--primary-color)' }}>{post.title}</h4>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '8px' }}>{post.date}</p>
@@ -481,7 +483,7 @@ const AdminDashboard: React.FC = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
               {slideshows.map(slide => (
                 <div key={slide.id} className="info-card" style={{ padding: '10px' }}>
-                  <img src={`http://localhost:3001${slide.image}`} alt="slide" style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px' }} />
+                  <img src={`${UPLOADS_URL}${slide.image}`} alt="slide" style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px', marginBottom: '10px' }} />
                   <button onClick={() => deleteSlideshow(slide.id)} className="btn-outline" style={{ width: '100%', color: '#ef4444', borderColor: '#ef4444', justifyContent: 'center' }}><Trash2 size={18} /> Delete Slide</button>
                 </div>
               ))}

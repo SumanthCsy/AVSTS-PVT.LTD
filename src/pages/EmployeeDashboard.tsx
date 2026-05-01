@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, MapPin, Phone, User, CheckCircle, Clock, Briefcase, X, CreditCard } from 'lucide-react';
 
-const API_BASE = 'http://localhost:3001/api';
+import { API_URL, UPLOADS_URL } from '../utils/api';
+
+const API_BASE = API_URL;
 
 const EmployeeDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -68,7 +70,7 @@ const EmployeeDashboard: React.FC = () => {
   const done = completedTasks.length;
 
   const avatarUrl = empProfile?.image
-    ? `http://localhost:3001${empProfile.image}`
+    ? `${UPLOADS_URL}${empProfile.image}`
     : null;
 
   return (

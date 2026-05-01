@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, UserCircle } from 'lucide-react';
+import { API_URL } from '../utils/api';
 
 const Login: React.FC = () => {
   const [role, setRole] = useState<'admin' | 'employee'>('employee');
@@ -22,7 +23,7 @@ const Login: React.FC = () => {
       }
     } else {
       try {
-        const res = await fetch('http://localhost:3001/api/employee/login', {
+        const res = await fetch(`${API_URL}/employee/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: userId, password })

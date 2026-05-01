@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Briefcase, MapPin, Calendar, ChevronDown, ChevronUp, Send } from 'lucide-react';
+import { API_URL } from '../utils/api';
 
 const Careers: React.FC = () => {
   const [jobs, setJobs] = useState<any[]>([]);
   const [expanded, setExpanded] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/careers')
+    fetch(`${API_URL}/careers`)
       .then(res => res.json())
       .then(data => setJobs(data.filter((j: any) => j.active === 1)))
       .catch(console.error);

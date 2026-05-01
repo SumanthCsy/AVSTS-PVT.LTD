@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ArrowRight, ShieldCheck, Clock, Award, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { API_URL, UPLOADS_URL } from '../utils/api';
 
 
 const servicesList = [
@@ -39,13 +40,13 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Fetch live slideshows
-    fetch('http://localhost:3001/api/slideshows')
+    fetch(`${API_URL}/slideshows`)
       .then(res => res.json())
       .then(data => {
         if (data && data.length > 0) {
           setSlides(data.map((d: any) => ({ 
             ...d, 
-            image: `http://localhost:3001${d.image}`,
+            image: `${UPLOADS_URL}${d.image}`,
             title: d.title || '' 
           })));
         }
@@ -53,7 +54,7 @@ const Home: React.FC = () => {
       .catch(console.error);
 
     // Fetch live posts
-    fetch('http://localhost:3001/api/posts')
+    fetch(`${API_URL}/posts`)
       .then(res => res.json())
       .then(data => setPosts(data.slice(0, 3)))
       .catch(console.error);
@@ -220,7 +221,7 @@ const Home: React.FC = () => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
             {posts.map(post => (
               <div key={post.id} className="info-card" style={{ padding: 0, overflow: 'hidden' }}>
-                {post.image && <img src={`http://localhost:3001${post.image}`} alt={post.title} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />}
+                {post.image && <img src={`${UPLOADS_URL}${post.image}`} alt={post.title} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />}
                 <div style={{ padding: '24px' }}>
                   <p style={{ color: 'var(--secondary-color)', fontSize: '0.8rem', fontWeight: 700, marginBottom: '8px' }}>{post.date}</p>
                   <h3 style={{ fontSize: '1.2rem', marginBottom: '12px' }}>{post.title}</h3>
