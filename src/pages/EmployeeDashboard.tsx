@@ -62,7 +62,7 @@ const EmployeeDashboard: React.FC = () => {
 
   const activeTasks = tasks.filter(t => t.status !== 'Completed' && t.status !== 'Cancelled');
   const completedTasks = tasks.filter(t => t.status === 'Completed');
-  const cancelledTasks = tasks.filter(t => t.status === 'Cancelled');
+
   
   const pending = activeTasks.length;
   const done = completedTasks.length;

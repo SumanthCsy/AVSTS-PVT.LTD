@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Bell, Image as ImageIcon, LogOut, FileText, Settings as SettingsIcon, BarChart3, Edit, Trash2, UserPlus, Briefcase, X, Megaphone } from 'lucide-react';
+import { Bell, Image as ImageIcon, LogOut, FileText, Settings as SettingsIcon, BarChart3, Edit, Trash2, UserPlus, Briefcase, X, Megaphone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import RichEditor from '../components/RichEditor';
 
@@ -421,7 +421,7 @@ const AdminDashboard: React.FC = () => {
                 <input type="text" name="title" placeholder="Post Title" required />
                 <div>
                   <label>Post Content</label>
-                  <RichEditor content={postContent} setContent={setPostContent} />
+                  <RichEditor value={postContent} onChange={setPostContent} />
                 </div>
                 <input type="date" name="date" required />
                 <div><label>Upload Image:</label><input type="file" name="image" style={{ marginLeft: '10px' }} /></div>

@@ -4,7 +4,7 @@ import { Fan, Wrench, PenTool, ThermometerSnowflake } from 'lucide-react';
 
 const SplashScreen: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLHeadingElement>(null);
+  const logoRef = useRef<HTMLImageElement>(null);
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
 
