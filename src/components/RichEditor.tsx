@@ -94,6 +94,7 @@ const RichEditor: React.FC<RichEditorProps> = ({ value, onChange, placeholder = 
         contentEditable
         suppressContentEditableWarning
         onInput={e => onChange((e.target as HTMLDivElement).innerHTML)}
+        onBlur={e => onChange((e.target as HTMLDivElement).innerHTML)}
         data-placeholder={placeholder}
         style={{
           minHeight,
@@ -103,7 +104,7 @@ const RichEditor: React.FC<RichEditorProps> = ({ value, onChange, placeholder = 
           lineHeight: '1.7',
           color: 'var(--text-main)',
         }}
-        dangerouslySetInnerHTML={value ? undefined : undefined}
+        dangerouslySetInnerHTML={{ __html: value }}
       />
     </div>
   );

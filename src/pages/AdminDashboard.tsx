@@ -17,6 +17,8 @@ const AdminDashboard: React.FC = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [slideshows, setSlideshows] = useState<any[]>([]);
   const [careers, setCareers] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
 
   // Career form state
   const [careerTitle, setCareerTitle] = useState('');
@@ -44,19 +46,30 @@ const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
+    setIsLoading(true);
+    setFetchError(false);
     try {
       const bRes = await fetch(`${API_BASE}/bookings`);
+      if (!bRes.ok) throw new Error();
       setBookings(await bRes.json());
+      
       const eRes = await fetch(`${API_BASE}/employees`);
       setEmployees(await eRes.json());
+      
       const pRes = await fetch(`${API_BASE}/posts`);
       setPosts(await pRes.json());
+      
       const sRes = await fetch(`${API_BASE}/slideshows`);
       setSlideshows(await sRes.json());
+      
       const cRes = await fetch(`${API_BASE}/careers`);
       setCareers(await cRes.json());
+      
+      setIsLoading(false);
     } catch (e) {
-      console.error(e);
+      console.error('Fetch error:', e);
+      setFetchError(true);
+      setIsLoading(false);
     }
   };
 
@@ -241,13 +254,31 @@ const AdminDashboard: React.FC = () => {
                 <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#10b981' }}>{bookings.filter(b => b.status === 'Completed').length}</p>
               </div>
               <div style={{ background: 'rgba(255,255,255,0.5)', padding: '20px', borderRadius: '12px', border: '1px solid var(--glass-border)' }}>
+                <h4 style={{ color: 'var(--text-muted)' }}>Cancelled Requests</h4>
+                <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#ef4444' }}>{bookings.filter(b => b.status === 'Cancelled').length}</p>
+              </div>
+              <div style={{ background: 'rgba(255,255,255,0.5)', padding: '20px', borderRadius: '12px', border: '1px solid var(--glass-border)' }}>
                 <h4 style={{ color: 'var(--text-muted)' }}>Total Employees</h4>
                 <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--secondary-color)' }}>{employees.length}</p>
               </div>
             </div>
+            
+            {fetchError && (
+              <div style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', padding: '16px', borderRadius: '12px', marginBottom: '24px', textAlign: 'center' }}>
+                <strong>Connection Error:</strong> Could not connect to the database. Is the backend running at {API_BASE}?
+                <button onClick={fetchData} style={{ marginLeft: '16px', background: 'none', border: '1px solid #ef4444', color: '#ef4444', padding: '4px 12px', borderRadius: '8px', cursor: 'pointer' }}>Retry</button>
+              </div>
+            )}
+
+            {isLoading && !fetchError && (
+              <div style={{ textAlign: 'center', padding: '40px' }}>
+                <div className="loader" style={{ border: '4px solid #f3f3f3', borderTop: '4px solid var(--primary-color)', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 2s linear infinite', margin: '0 auto 16px' }}></div>
+                <p>Syncing with database...</p>
+              </div>
+            )}
           </div>
         )}
-
+        
         {/* LIVE WORKS TAB */}
         {activeTab === 'liveworks' && (
           <div>
